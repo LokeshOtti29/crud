@@ -1,4 +1,5 @@
 ﻿using crud.Models;
+using crud.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,17 +9,30 @@ namespace crud.Controllers
     [ApiController]
     public class VideoGameController : ControllerBase
     {
-        static List<Character> characters = new List<Character>
+
+        private readonly IVideoGameCharacterServices _service;
+
+        public VideoGameController(IVideoGameCharacterServices service)
         {
-                new Character { Id = 1, Name = "Mario", Game = "Super Mario Bros.", Role = "Protagonist" },
-                new Character { Id = 2, Name = "Link", Game = "The Legend of Zelda", Role = "Protagonist" },
-                new Character { Id = 3, Name = "Master Chief", Game = "Halo", Role = "Protagonist" }
-        };
+            _service = service;
+        }
 
         [HttpGet]
         public async Task<ActionResult<List<Character>>> GetCharacters()
         {
-            return await Task.FromResult(Ok(characters));
+            var characters = await _service.GetCharacterAsync();
+            return Ok(characters);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Character>> GetCharacterById(int id)
+        {
+            var character = await _service.GetCharacterByIdAsync(id);
+            if (character == null)
+            {
+                return NotFound();
+            }
+            return Ok(character);
         }
     }
 }
