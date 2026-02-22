@@ -1,14 +1,15 @@
-﻿using crud.Models;
+﻿using crud.Dtos;
+using crud.Models;
 
 namespace crud.Services
 {
     public interface IVideoGameCharacterServices
     {
-        Task<List<Character>> GetCharacterAsync();
-        Task<Character?> GetCharacterByIdAsync(int id);
+        Task<List<CharacterResponse>> GetCharacterAsync();
+        Task<CharacterResponse?> GetCharacterByIdAsync(int id);
 
-        Task<Character> AddCharacterAsync(Character character);
-        Task<bool> UpdateCharacterAsync(int id, Character character);
+        Task<CharacterResponse> AddCharacterAsync(CreateCharacterResponse character);
+        Task<bool> UpdateCharacterAsync(int id, UpdateCharacterResponse character);
         Task<bool> DeleteCharacterAsync(int id);
 
     }

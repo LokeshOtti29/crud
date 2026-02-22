@@ -1,12 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using crud.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace crud.Data
 {
-    public class AddDbContext : DbContext
+    public class AddDbContext(DbContextOptions<AddDbContext> options) : DbContext(options)
     {
-        public AddDbContext(DbContextOptions<AddDbContext> options) : base(options)
-        {
-        }
-            public DbSet<Models.Character> Characters { get; set; }
+        public DbSet<Character> Characters => Set<Character>();
     }
 }

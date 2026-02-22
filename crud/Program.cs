@@ -1,4 +1,6 @@
+using crud.Data;
 using crud.Services;
+using Microsoft.EntityFrameworkCore;
 using IVideoGameCharacterServices = crud.Services.IVideoGameCharacterServices;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddScoped<IVideoGameCharacterServices, VideoGameCharacterServices>();
+
+builder.Services.AddDbContext<AddDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
